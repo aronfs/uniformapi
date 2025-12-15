@@ -1,0 +1,58 @@
+meta {
+  name: Crear Categoría
+  type: http
+  seq: 1
+}
+
+docs {
+  # Crear Categoría
+  
+  Este endpoint permite crear una nueva categoría de productos.
+  
+  ## Descripción
+  Crea una nueva categoría que puede ser asociada a productos.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Body
+  - `name`: Nombre de la categoría (string, requerido)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Categoría creada con éxito",
+    "data": {
+      "id": 1,
+      "name": "Ropa Deportiva"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El nombre es requerido
+  - `400`: Token inválido o expirado
+}
+
+post {
+  url: {{base_url}}/api/v1/categories/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Ropa Deportiva"
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

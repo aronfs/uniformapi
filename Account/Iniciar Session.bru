@@ -1,0 +1,63 @@
+meta {
+  name: Iniciar Sesión
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v1/accounts/login
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "admin@example.com",
+    "password": "Admin123!@#"
+  }
+}
+
+script:post-response {
+  bru.setVar("token", res.body.data.token);
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Iniciar Sesión
+  
+  Este endpoint permite autenticarse y obtener un token JWT.
+  
+  ## Descripción
+  Valida las credenciales del usuario y retorna un token JWT que debe usarse en las peticiones protegidas.
+  
+  ## Autenticación
+  No requiere autenticación previa
+  
+  ## Body
+  - `email`: Email de la cuenta (string, requerido)
+  - `password`: Contraseña de la cuenta (string, requerido)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Login exitoso",
+    "data": {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: Credenciales inválidas (mensaje genérico por seguridad)
+  
+  ## Uso del Token
+  Después de obtener el token, inclúyelo en el header de las peticiones:
+  ```
+  Authorization: Bearer {token}
+  ```
+}

@@ -1,0 +1,62 @@
+meta {
+  name: Obtener Usuario por Email
+  type: http
+  seq: 3
+}
+
+docs {
+  # Obtener Usuario por Email
+  
+  Este endpoint retorna la información de un usuario específico por su email.
+  
+  ## Descripción
+  Busca y retorna los datos de un usuario usando su email como identificador único.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Parámetros
+  - `email`: Email del usuario (string, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Usuario obtenido con éxito",
+    "data": {
+      "id": 1,
+      "name": "Juan",
+      "last_name": "Pérez",
+      "telf": "0987654321",
+      "address": "Calle Principal 123",
+      "foto": "foto.jpg",
+      "email": "juan@example.com",
+      "type_user": "Cliente"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `404`: Usuario no encontrado
+  - `400`: El email es requerido
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/user/getUser/:email
+  body: none
+  auth: inherit
+}
+
+params:path {
+  email: juan@example.com
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,80 @@
+meta {
+  name: Actualizar Producto
+  type: http
+  seq: 4
+}
+
+docs {
+  # Actualizar Producto
+  
+  Este endpoint permite actualizar la información de un producto existente.
+  
+  ## Descripción
+  Actualiza los campos proporcionados de un producto. Solo se actualizan los campos que se envían en el body.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Parámetros
+  - `id`: ID del producto a actualizar (number, requerido en la URL)
+  
+  ## Body (todos opcionales)
+  - `name`: Nombre del producto (string, opcional)
+  - `code`: Código del producto (string, opcional)
+  - `description`: Descripción del producto (string, opcional)
+  - `talla`: Talla del producto (string, opcional)
+  - `color`: Color del producto (string, opcional)
+  - `foto`: URL o nombre del archivo de foto (string, opcional)
+  - `category_id`: ID de la categoría (number, opcional)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Producto actualizado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Camisa Polo Actualizada",
+      "code": "CAM-001",
+      "description": "Nueva descripción",
+      "talla": "L",
+      "color": "Rojo",
+      "foto": "nueva_foto.jpg",
+      "category_id": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: Producto no encontrado
+  - `400`: No se proporcionaron campos para actualizar
+  - `400`: Token inválido o expirado
+}
+
+put {
+  url: {{base_url}}/api/v1/products/update/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}
+
+body:json {
+  {
+    "name": "Camisa Polo Actualizada",
+    "talla": "L",
+    "color": "Rojo"
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

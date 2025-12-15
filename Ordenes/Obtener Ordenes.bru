@@ -1,0 +1,53 @@
+meta {
+  name: Obtener Todas las Órdenes
+  type: http
+  seq: 2
+}
+
+docs {
+  # Obtener Todas las Órdenes
+  
+  Este endpoint retorna una lista de todas las órdenes registradas.
+  
+  ## Descripción
+  Obtiene todas las órdenes del sistema ordenadas por fecha de registro (más recientes primero).
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Órdenes obtenidas con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Orden #001",
+        "tipo_pago": "Efectivo",
+        "numero_documento": "1",
+        "fecha_registro": "2024-01-15T10:30:00Z"
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/orders/getAll
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

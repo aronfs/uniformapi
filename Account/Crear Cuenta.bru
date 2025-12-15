@@ -1,0 +1,61 @@
+meta {
+  name: Crear Cuenta
+  type: http
+  seq: 1
+}
+
+docs {
+  # Crear Cuenta (Solo una vez)
+  
+  Este endpoint permite crear la cuenta de administrador. **Solo puede ejecutarse una vez**.
+  
+  ## Descripción
+  Crea una cuenta de administrador con el rol "SuperAdmin". Si ya existe un administrador, retornará un error.
+  
+  ## Autenticación
+  No requiere autenticación (es el primer paso para crear el admin)
+  
+  ## Body
+  - `email`: Email del administrador (string, requerido)
+  - `password`: Contraseña que debe cumplir requisitos de seguridad (string, requerido)
+    - Mínimo 8 caracteres
+    - Al menos una mayúscula
+    - Al menos una minúscula
+    - Al menos un número
+    - Al menos un carácter especial
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Cuenta creada con éxito",
+    "data": {
+      "email": "admin@example.com",
+      "password": "[hashed]"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: La cuenta ya existe
+  - `400`: La contraseña no cumple los requisitos
+  - `400`: Ya existe un usuario administrador
+}
+
+post {
+  url: {{base_url}}/api/v1/accounts/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "admin@example.com",
+    "password": "Admin123!@#"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

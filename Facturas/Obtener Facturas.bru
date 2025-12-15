@@ -1,0 +1,56 @@
+meta {
+  name: Obtener Todas las Facturas
+  type: http
+  seq: 2
+}
+
+docs {
+  # Obtener Todas las Facturas
+  
+  Este endpoint retorna una lista de todas las facturas emitidas.
+  
+  ## Descripción
+  Obtiene todas las facturas del sistema ordenadas por fecha de emisión (más recientes primero).
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Facturas obtenidas con éxito",
+    "data": [
+      {
+        "id": 1,
+        "order_id": 1,
+        "numero_factura": "FAC-1-1705315800000",
+        "fecha_emision": "2024-01-15T10:30:00Z",
+        "subtotal": 101.00,
+        "iva": 12.12,
+        "total": 113.12,
+        "estado": "EMITIDA"
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/invoices/getAll
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

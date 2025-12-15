@@ -1,0 +1,85 @@
+meta {
+  name: Crear Orden
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/v1/orders/create
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Orden #002",
+    "tipo_pago": "Efectivo",
+    "details": [
+      {
+        "product_id": 1,
+        "user_id": 1,
+        "cantidad": 3,
+        "precio": 25.50
+      },
+      {
+        "product_id": 2,
+        "user_id": 1,
+        "cantidad": 9,
+        "precio": 50.00
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Crear Orden
+  
+  Este endpoint permite crear una nueva orden de compra con sus detalles.
+  
+  ## Descripción
+  Crea una orden con múltiples productos. El sistema genera automáticamente un número de documento único.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Body
+  - `name`: Nombre de la orden (string, requerido)
+  - `tipo_pago`: Tipo de pago (string, opcional) - ej: "Efectivo", "Tarjeta", "Transferencia"
+  - `details`: Array de detalles de la orden (array, requerido)
+    - `product_id`: ID del producto (number, requerido)
+    - `user_id`: ID del usuario que realiza la orden (number, requerido)
+    - `cantidad`: Cantidad del producto (number, requerido)
+    - `precio`: Precio unitario del producto (number, requerido)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Orden creada con éxito",
+    "data": {
+      "id": 1,
+      "name": "Orden #001",
+      "tipo_pago": "Efectivo",
+      "numero_documento": "1",
+      "fecha_registro": "2024-01-15T10:30:00Z"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El nombre y los detalles son requeridos
+  - `400`: Debe incluir al menos un detalle de orden
+  - `400`: Token inválido o expirado
+  
+  ## Nota
+  El total de cada detalle se calcula automáticamente como: `cantidad * precio`
+}

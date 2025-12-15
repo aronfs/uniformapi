@@ -1,0 +1,75 @@
+meta {
+  name: Crear Producto
+  type: http
+  seq: 1
+}
+
+docs {
+  # Crear Producto
+  
+  Este endpoint permite crear un nuevo producto en el catálogo.
+  
+  ## Descripción
+  Crea un nuevo producto con toda su información. El producto puede estar asociado a una categoría.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Body
+  - `name`: Nombre del producto (string, requerido)
+  - `code`: Código del producto (string, opcional)
+  - `description`: Descripción del producto (string, opcional)
+  - `talla`: Talla del producto (string, opcional)
+  - `color`: Color del producto (string, opcional)
+  - `foto`: URL o nombre del archivo de foto (string, opcional)
+  - `category_id`: ID de la categoría (number, opcional)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Producto creado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Camisa Polo",
+      "code": "CAM-001",
+      "description": "Camisa polo de algodón",
+      "talla": "M",
+      "color": "Azul",
+      "foto": "camisa_polo.jpg",
+      "category_id": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El nombre es requerido
+  - `400`: Token inválido o expirado
+}
+
+post {
+  url: {{base_url}}/api/v1/products/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Camisa Polo",
+    "code": "CAM-001",
+    "description": "Camisa polo de algodón",
+    "talla": "M",
+    "color": "Azul",
+    "foto": "camisa_polo.jpg",
+    "category_id": 1
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

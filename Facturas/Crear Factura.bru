@@ -1,0 +1,72 @@
+meta {
+  name: Crear Factura
+  type: http
+  seq: 1
+}
+
+docs {
+  # Crear Factura
+  
+  Este endpoint genera una factura a partir de una orden existente.
+  
+  ## Descripción
+  Crea una factura calculando automáticamente el subtotal, IVA (12%) y total basado en los detalles de la orden.
+  El sistema genera un número de factura único.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Body
+  - `order_id`: ID de la orden a facturar (number, requerido)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Factura creada con éxito",
+    "data": {
+      "id": 1,
+      "order_id": 1,
+      "numero_factura": "FAC-1-1705315800000",
+      "fecha_emision": "2024-01-15T10:30:00Z",
+      "subtotal": 101.00,
+      "iva": 12.12,
+      "total": 113.12,
+      "estado": "EMITIDA"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: Ya existe una factura para esta orden
+  - `400`: Orden no encontrada
+  - `400`: El order_id es requerido
+  - `400`: Token inválido o expirado
+  
+  ## Cálculos
+  - **Subtotal**: Suma de todos los totales de los detalles de la orden
+  - **IVA**: 12% del subtotal
+  - **Total**: Subtotal + IVA
+}
+
+post {
+  url: {{base_url}}/api/v1/invoices/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "order_id": 1
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

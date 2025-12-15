@@ -1,0 +1,76 @@
+meta {
+  name: Actualizar Usuario
+  type: http
+  seq: 4
+}
+
+docs {
+  # Actualizar Usuario
+  
+  Este endpoint permite actualizar la información de un usuario existente.
+  
+  ## Descripción
+  Actualiza los campos proporcionados de un usuario. Solo se actualizan los campos que se envían en el body.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Parámetros
+  - `email`: Email del usuario a actualizar (string, requerido en la URL)
+  
+  ## Body (todos opcionales)
+  - `name`: Nombre del usuario (string, opcional)
+  - `last_name`: Apellido del usuario (string, opcional)
+  - `telf`: Teléfono del usuario (string, opcional)
+  - `address`: Dirección del usuario (string, opcional)
+  - `foto`: URL o nombre del archivo de foto (string, opcional)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Usuario actualizado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Juan Carlos",
+      "last_name": "Pérez",
+      "telf": "0987654321",
+      "address": "Nueva Dirección 456",
+      "foto": "nueva_foto.jpg",
+      "email": "juan@example.com",
+      "type_user": "Cliente"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: Usuario no encontrado
+  - `400`: Se requiere al menos un campo para actualizar
+  - `400`: Token inválido o expirado
+}
+
+put {
+  url: {{base_url}}/api/v1/user/updateUser/:email
+  body: json
+  auth: inherit
+}
+
+params:path {
+  email: juan@example.com
+}
+
+body:json {
+  {
+    "name": "Juan Carlos",
+    "address": "Nueva Dirección 456"
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

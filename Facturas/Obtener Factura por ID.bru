@@ -1,0 +1,63 @@
+meta {
+  name: Obtener Factura por ID
+  type: http
+  seq: 3
+}
+
+docs {
+  # Obtener Factura por ID
+  
+  Este endpoint retorna la información de una factura específica.
+  
+  ## Descripción
+  Busca y retorna los datos completos de una factura usando su ID.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Parámetros
+  - `id`: ID de la factura (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Factura obtenida con éxito",
+    "data": {
+      "id": 1,
+      "order_id": 1,
+      "numero_factura": "FAC-1-1705315800000",
+      "fecha_emision": "2024-01-15T10:30:00Z",
+      "subtotal": 101.00,
+      "iva": 12.12,
+      "total": 113.12,
+      "estado": "EMITIDA"
+    }
+  }
+  ```
+  
+  ## Errores
+  - `404`: Factura no encontrada
+  - `400`: El ID es requerido
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/invoices/get/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

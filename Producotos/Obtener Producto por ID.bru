@@ -1,0 +1,63 @@
+meta {
+  name: Obtener Producto por ID
+  type: http
+  seq: 3
+}
+
+docs {
+  # Obtener Producto por ID
+  
+  Este endpoint retorna la información de un producto específico.
+  
+  ## Descripción
+  Busca y retorna los datos de un producto usando su ID.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Parámetros
+  - `id`: ID del producto (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Producto obtenido con éxito",
+    "data": {
+      "id": 1,
+      "name": "Camisa Polo",
+      "code": "CAM-001",
+      "description": "Camisa polo de algodón",
+      "talla": "M",
+      "color": "Azul",
+      "foto": "camisa_polo.jpg",
+      "category_id": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `404`: Producto no encontrado
+  - `400`: El ID es requerido
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/products/get/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

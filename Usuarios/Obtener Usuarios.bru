@@ -1,0 +1,55 @@
+meta {
+  name: Obtener Todos los Usuarios
+  type: http
+  seq: 2
+}
+
+docs {
+  # Obtener Todos los Usuarios
+  
+  Este endpoint retorna una lista de todos los usuarios registrados.
+  
+  ## Descripción
+  Obtiene todos los usuarios del sistema con su información completa, incluyendo el tipo de usuario.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Usuarios obtenidos con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Juan",
+        "last_name": "Pérez",
+        "telf": "0987654321",
+        "address": "Calle Principal 123",
+        "foto": "foto.jpg",
+        "email": "juan@example.com",
+        "type_user": "Cliente"
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/user/getUsers
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

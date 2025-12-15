@@ -1,0 +1,53 @@
+meta {
+  name: Obtener Tipos de Usuario
+  type: http
+  seq: 1
+}
+
+docs {
+  # Obtener Tipos de Usuario
+  
+  Este endpoint retorna todos los tipos de usuario disponibles en el sistema.
+  
+  ## Descripción
+  Lista todos los tipos de usuario registrados (ej: Administrador, Cliente, etc.)
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Tipos de usuario obtenidos con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Administrador"
+      },
+      {
+        "id": 2,
+        "name": "Cliente"
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+}
+
+get {
+  url: {{base_url}}/api/v1/typeUser/getTypeUser
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
