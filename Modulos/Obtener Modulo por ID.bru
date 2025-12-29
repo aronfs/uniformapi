@@ -1,0 +1,57 @@
+meta {
+  name: Obtener Modulo por ID
+  type: http
+  seq: 3
+}
+
+docs {
+  # Obtener Módulo por ID
+  
+  Este endpoint permite obtener un módulo específico por su ID.
+  
+  ## Descripción
+  Retorna la información de un módulo específico basado en su ID.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id`: ID del módulo (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Módulo obtenido con éxito",
+    "data": {
+      "id": 1,
+      "name": "Usuarios",
+      "fecha_registro": "2024-01-01T00:00:00.000Z",
+      "esactivo": true
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID es requerido
+  - `404`: Módulo no encontrado
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+get {
+  url: {{base_url}}/api/v1/modules/get/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

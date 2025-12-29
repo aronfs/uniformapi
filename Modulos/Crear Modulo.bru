@@ -1,0 +1,61 @@
+meta {
+  name: Crear Modulo
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/v1/modules/create
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Productos"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Crear Módulo
+  
+  Este endpoint permite crear un nuevo módulo en el sistema.
+  
+  ## Descripción
+  Crea un nuevo módulo que puede contener permisos. Los módulos organizan los permisos del sistema.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Body
+  - `name`: Nombre del módulo (string, requerido)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Módulo creado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Usuarios",
+      "fecha_registro": "2024-01-01T00:00:00.000Z",
+      "esactivo": true
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El nombre es requerido
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}

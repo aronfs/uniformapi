@@ -1,0 +1,71 @@
+meta {
+  name: Crear Permiso
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/v1/permissions/create
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Obtener Productos",
+    "peticion_http": "GET",
+    "endpoint": "/api/v1/products/getAll",
+    "descripcion": "Permite obtener productos creados en el sistema",
+    "id_modulo": 2
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Crear Permiso
+  
+  Este endpoint permite crear un nuevo permiso en el sistema.
+  
+  ## Descripción
+  Crea un nuevo permiso asociado a un módulo. Los permisos definen qué acciones pueden realizar los roles en los endpoints del sistema.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Body
+  - `name`: Nombre del permiso (string, requerido)
+  - `peticion_http`: Método HTTP (GET, POST, PUT, DELETE) (string, requerido)
+  - `endpoint`: Ruta del endpoint (ej: /user/createUser o /user/getUser/:email) (string, requerido)
+  - `descripcion`: Descripción del permiso (string, requerido)
+  - `id_modulo`: ID del módulo al que pertenece (number, requerido)
+  
+  ## Respuesta Exitosa (201)
+  ```json
+  {
+    "status": 201,
+    "message": "Permiso creado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Crear Usuario",
+      "peticion_http": "POST",
+      "endpoint": "/user/createUser",
+      "descripcion": "Permite crear nuevos usuarios",
+      "id_modulo": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: Todos los campos son requeridos
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}

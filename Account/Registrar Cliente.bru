@@ -1,0 +1,23 @@
+meta {
+  name: Registrar Cliente
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/api/v1/accounts/registerClient
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "email": "aaronviracocha7@gmail.com",
+    "password": "Aron.com123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,76 @@
+meta {
+  name: Asignar Modulos a Rol
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/v1/roles/assignModules?id_rol=1
+  body: json
+  auth: inherit
+}
+
+params:query {
+  id_rol: 1
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "id_modulos": [1, 2]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  # Asignar Módulos a Rol
+  
+  Este endpoint permite asignar módulos a un rol específico.
+  
+  ## Descripción
+  Asigna uno o más módulos a un rol. Los módulos asignados determinan qué permisos tiene acceso el rol. Si el rol ya tenía módulos asignados, estos serán reemplazados por los nuevos.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id_rol`: ID del rol (number, requerido en la URL)
+  
+  ## Body
+  - `id_modulos`: Array de IDs de módulos a asignar (array de numbers, requerido)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Módulos asignados al rol con éxito",
+    "data": {
+      "success": true
+    }
+  }
+  ```
+  
+  ## Ejemplo de uso
+  Para asignar los módulos con ID 1, 2 y 3 al rol con ID 1:
+  ```json
+  {
+    "id_modulos": [1, 2, 3]
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID del rol es requerido
+  - `400`: Los módulos son requeridos
+  - `400`: Rol no encontrado
+  - `400`: Uno o más módulos no existen
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}

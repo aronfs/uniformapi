@@ -1,0 +1,72 @@
+meta {
+  name: Actualizar Permiso
+  type: http
+  seq: 5
+}
+
+docs {
+  # Actualizar Permiso
+  
+  Este endpoint permite actualizar la información de un permiso existente.
+  
+  ## Descripción
+  Actualiza los campos de un permiso. Todos los campos son opcionales, solo se actualizarán los que se envíen.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id`: ID del permiso (number, requerido en la URL)
+  
+  ## Body (todos opcionales)
+  - `name`: Nuevo nombre del permiso (string, opcional)
+  - `peticion_http`: Nuevo método HTTP (string, opcional)
+  - `endpoint`: Nueva ruta del endpoint (string, opcional)
+  - `descripcion`: Nueva descripción (string, opcional)
+  - `id_modulo`: Nuevo ID del módulo (number, opcional)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Permiso actualizado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Crear Usuario Actualizado",
+      "peticion_http": "POST",
+      "endpoint": "/user/createUser",
+      "descripcion": "Permite crear nuevos usuarios en el sistema",
+      "id_modulo": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID es requerido
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+put {
+  url: {{base_url}}/api/v1/permissions/update/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Crear Usuario Actualizado",
+    "descripcion": "Permite crear nuevos usuarios en el sistema"
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

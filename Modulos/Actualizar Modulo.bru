@@ -1,0 +1,68 @@
+meta {
+  name: Actualizar Modulo
+  type: http
+  seq: 4
+}
+
+docs {
+  # Actualizar Módulo
+  
+  Este endpoint permite actualizar la información de un módulo existente.
+  
+  ## Descripción
+  Actualiza el nombre y/o el estado activo de un módulo específico.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id`: ID del módulo (number, requerido en la URL)
+  
+  ## Body
+  - `name`: Nuevo nombre del módulo (string, requerido)
+  - `esactivo`: Estado activo del módulo (boolean, opcional)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Módulo actualizado con éxito",
+    "data": {
+      "id": 1,
+      "name": "Usuarios Actualizado",
+      "fecha_registro": "2024-01-01T00:00:00.000Z",
+      "esactivo": true
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID es requerido
+  - `400`: El nombre es requerido
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+put {
+  url: {{base_url}}/api/v1/modules/update/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "name": "Usuarios Actualizado",
+    "esactivo": true
+  }
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,20 @@
+meta {
+  name: Enviar Contraseña Temporal
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/api/v1/passwordRecovery/sendTemporaryPassword?email=aaronviracocha7@gmail.com
+  body: none
+  auth: none
+}
+
+params:query {
+  email: aaronviracocha7@gmail.com
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

@@ -1,0 +1,60 @@
+meta {
+  name: Obtener Modulos
+  type: http
+  seq: 2
+}
+
+docs {
+  # Obtener Módulos
+  
+  Este endpoint permite obtener todos los módulos activos del sistema.
+  
+  ## Descripción
+  Retorna una lista de todos los módulos que están activos en el sistema.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Módulos obtenidos con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Usuarios",
+        "fecha_registro": "2024-01-01T00:00:00.000Z",
+        "esactivo": true
+      },
+      {
+        "id": 2,
+        "name": "Productos",
+        "fecha_registro": "2024-01-01T00:00:00.000Z",
+        "esactivo": true
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+get {
+  url: {{base_url}}/api/v1/modules/getAll
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,64 @@
+meta {
+  name: Obtener Permisos
+  type: http
+  seq: 2
+}
+
+docs {
+  # Obtener Permisos
+  
+  Este endpoint permite obtener todos los permisos del sistema.
+  
+  ## Descripción
+  Retorna una lista de todos los permisos registrados en el sistema.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Permisos obtenidos con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Crear Usuario",
+        "peticion_http": "POST",
+        "endpoint": "/user/createUser",
+        "descripcion": "Permite crear nuevos usuarios",
+        "id_modulo": 1
+      },
+      {
+        "id": 2,
+        "name": "Obtener Usuarios",
+        "peticion_http": "GET",
+        "endpoint": "/user/getUsers",
+        "descripcion": "Permite obtener la lista de usuarios",
+        "id_modulo": 1
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+get {
+  url: {{base_url}}/api/v1/permissions/getAll
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

@@ -1,0 +1,24 @@
+meta {
+  name: Restablecer Contraseña
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/api/v1/passwordRecovery/changePassword
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "temporaryKey": "uWeOCMqSjSRH",
+    "password": "Super.com123",
+    "confirmPassword":"Super.com123"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

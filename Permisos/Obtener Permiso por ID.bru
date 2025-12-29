@@ -1,0 +1,59 @@
+meta {
+  name: Obtener Permiso por ID
+  type: http
+  seq: 3
+}
+
+docs {
+  # Obtener Permiso por ID
+  
+  Este endpoint permite obtener un permiso específico por su ID.
+  
+  ## Descripción
+  Retorna la información de un permiso específico basado en su ID.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id`: ID del permiso (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Permiso obtenido con éxito",
+    "data": {
+      "id": 1,
+      "name": "Crear Usuario",
+      "peticion_http": "POST",
+      "endpoint": "/user/createUser",
+      "descripcion": "Permite crear nuevos usuarios",
+      "id_modulo": 1
+    }
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID es requerido
+  - `404`: Permiso no encontrado
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+get {
+  url: {{base_url}}/api/v1/permissions/get/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

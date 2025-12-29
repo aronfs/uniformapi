@@ -1,0 +1,68 @@
+meta {
+  name: Obtener Permisos por Modulo
+  type: http
+  seq: 4
+}
+
+docs {
+  # Obtener Permisos por Módulo
+  
+  Este endpoint permite obtener todos los permisos asociados a un módulo específico.
+  
+  ## Descripción
+  Retorna una lista de todos los permisos que pertenecen a un módulo determinado.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id_modulo`: ID del módulo (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Permisos obtenidos con éxito",
+    "data": [
+      {
+        "id": 1,
+        "name": "Crear Usuario",
+        "peticion_http": "POST",
+        "endpoint": "/user/createUser",
+        "descripcion": "Permite crear nuevos usuarios",
+        "id_modulo": 1
+      },
+      {
+        "id": 2,
+        "name": "Obtener Usuarios",
+        "peticion_http": "GET",
+        "endpoint": "/user/getUsers",
+        "descripcion": "Permite obtener la lista de usuarios",
+        "id_modulo": 1
+      }
+    ]
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID del módulo es requerido
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+get {
+  url: {{base_url}}/api/v1/permissions/getByModulo/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+

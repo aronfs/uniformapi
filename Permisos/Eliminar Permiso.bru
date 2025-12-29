@@ -1,0 +1,51 @@
+meta {
+  name: Eliminar Permiso
+  type: http
+  seq: 6
+}
+
+docs {
+  # Eliminar Permiso
+  
+  Este endpoint permite eliminar un permiso del sistema.
+  
+  ## Descripción
+  Elimina permanentemente un permiso de la base de datos.
+  
+  ## Autenticación
+  Requiere token JWT en el header `Authorization: Bearer {token}`
+  Requiere permisos de autorización para acceder a este recurso
+  
+  ## Parámetros
+  - `id`: ID del permiso (number, requerido en la URL)
+  
+  ## Respuesta Exitosa (200)
+  ```json
+  {
+    "status": 200,
+    "message": "Permiso eliminado con éxito",
+    "data": true
+  }
+  ```
+  
+  ## Errores
+  - `400`: El ID es requerido
+  - `400`: Token inválido o expirado
+  - `403`: No tienes permisos para acceder a este recurso
+}
+
+delete {
+  url: {{base_url}}/api/v1/permissions/delete/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
