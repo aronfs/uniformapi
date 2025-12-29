@@ -4,6 +4,25 @@ meta {
   seq: 5
 }
 
+delete {
+  url: {{base_url}}/api/v1/products/delete/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 57
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Eliminar Producto
   
@@ -34,23 +53,3 @@ docs {
   - `400`: El ID es requerido
   - `400`: Token inválido o expirado
 }
-
-delete {
-  url: {{base_url}}/api/v1/products/delete/:id
-  body: none
-  auth: inherit
-}
-
-params:path {
-  id: 1
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
-}
-

@@ -4,6 +4,33 @@ meta {
   seq: 1
 }
 
+post {
+  url: {{base_url}}/api/v1/user/createUser
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "John",
+    "last_name": "Viracocha",
+    "telf": "0998050443",
+    "address": "Calle Principal 123",
+    "foto": "foto.jpg",
+    "email": "aaronviracocha7@gmail.com",
+    "type_user": "Cliente"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Crear Usuario
   
@@ -47,31 +74,4 @@ docs {
   - `400`: Tipo de usuario no encontrado
   - `400`: Token inválido o expirado
   - `400`: Todos los campos son requeridos
-}
-
-post {
-  url: {{base_url}}/api/v1/user/createUser
-  body: json
-  auth: inherit
-}
-
-body:json {
-  {
-    "name": "Juan",
-    "last_name": "Pérez",
-    "telf": "0987654321",
-    "address": "Calle Principal 123",
-    "foto": "foto.jpg",
-    "email": "juan@example.com",
-    "type_user": "Cliente"
-  }
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
 }

@@ -4,6 +4,37 @@ meta {
   seq: 4
 }
 
+put {
+  url: {{base_url}}/api/v1/user/updateUser/:email
+  body: json
+  auth: inherit
+}
+
+params:path {
+  email: juan@example.com
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "name": "Ju",
+    "last_name": "Pér",
+    "telf": "0987654321",
+    "address": "Calle Principal 12",
+    "foto": "foto.j",
+    "email": "juan@exle.com",
+    "type_user": "Cliente"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Actualizar Usuario
   
@@ -47,30 +78,4 @@ docs {
   - `400`: Usuario no encontrado
   - `400`: Se requiere al menos un campo para actualizar
   - `400`: Token inválido o expirado
-}
-
-put {
-  url: {{base_url}}/api/v1/user/updateUser/:email
-  body: json
-  auth: inherit
-}
-
-params:path {
-  email: juan@example.com
-}
-
-body:json {
-  {
-    "name": "Juan Carlos",
-    "address": "Nueva Dirección 456"
-  }
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
 }
