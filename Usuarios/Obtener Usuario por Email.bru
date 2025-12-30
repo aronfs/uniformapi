@@ -4,6 +4,25 @@ meta {
   seq: 3
 }
 
+get {
+  url: {{base_url}}/api/v1/user/getUser/:email
+  body: none
+  auth: inherit
+}
+
+params:path {
+  email: admin@example.com
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Obtener Usuario por Email
   
@@ -40,23 +59,4 @@ docs {
   - `404`: Usuario no encontrado
   - `400`: El email es requerido
   - `400`: Token inválido o expirado
-}
-
-get {
-  url: {{base_url}}/api/v1/user/getUser/:email
-  body: none
-  auth: inherit
-}
-
-params:path {
-  email: juan@example.com
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
 }

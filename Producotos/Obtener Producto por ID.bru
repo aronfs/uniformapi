@@ -4,6 +4,29 @@ meta {
   seq: 3
 }
 
+get {
+  url: {{base_url}}/api/v1/products/get/:id
+  body: none
+  auth: bearer
+}
+
+params:path {
+  id: 1
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+auth:bearer {
+  token: {{
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Obtener Producto por ID
   
@@ -41,23 +64,3 @@ docs {
   - `400`: El ID es requerido
   - `400`: Token inválido o expirado
 }
-
-get {
-  url: {{base_url}}/api/v1/products/get/:id
-  body: none
-  auth: inherit
-}
-
-params:path {
-  id: 1
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
-}
-

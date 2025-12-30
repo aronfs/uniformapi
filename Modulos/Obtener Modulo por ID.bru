@@ -4,6 +4,25 @@ meta {
   seq: 3
 }
 
+get {
+  url: {{base_url}}/api/v1/modules/get/:id
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 3
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
 docs {
   # Obtener Módulo por ID
   
@@ -39,19 +58,3 @@ docs {
   - `400`: Token inválido o expirado
   - `403`: No tienes permisos para acceder a este recurso
 }
-
-get {
-  url: {{base_url}}/api/v1/modules/get/1
-  body: none
-  auth: inherit
-}
-
-headers {
-  Authorization: Bearer {{token}}
-}
-
-settings {
-  encodeUrl: true
-  timeout: 0
-}
-

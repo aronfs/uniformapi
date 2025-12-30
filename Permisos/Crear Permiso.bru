@@ -16,11 +16,11 @@ headers {
 
 body:json {
   {
-    "name": "Obtener Productos",
+    "name": "Obtener Permisos",
     "peticion_http": "GET",
-    "endpoint": "/api/v1/products/getAll",
-    "descripcion": "Permite obtener productos creados en el sistema",
-    "id_modulo": 2
+    "endpoint": "/api/v1/permissions/getByModulo/:id",
+    "descripcion": "Permite obtener permisos por id de modulo creados en el sistema",
+    "id_modulo": 3
   }
 }
 
